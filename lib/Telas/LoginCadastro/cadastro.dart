@@ -1,4 +1,4 @@
-import 'package:calendario/main.dart';
+import '../../Estilo/colors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -96,7 +96,7 @@ class CadastroPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
+                  iconColor: AppColors.primary,
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),

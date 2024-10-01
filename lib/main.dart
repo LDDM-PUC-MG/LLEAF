@@ -1,96 +1,76 @@
-import 'dart:math';
-import 'package:calendar_slider/calendar_slider.dart';
+import 'package:calendario/Telas/quemsomos.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'fonts.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'Telas/LoginCadastro/login.dart';
+import 'Telas/calendario.dart';
+import 'Estilo/colors.dart';
+import 'Telas/LoginCadastro/cadastro.dart';
 
-class AppColors {
-  static const Color primary = Color(0xFF131F89); // Cor primária
-  static const Color secondary = Color(0xFF448AFF); // Cor secundária
-  static const Color background = Color(0xFFFFFFFF); // Branco
-  static const Color textPrimary = Color(0xFF000000); // Preto
-}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() => runApp(const MaterialApp(home: BottomNavBar()));
+
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Example for Calendar Slider',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-      ),
-      home: const ExamplePage(),
-    );
-  }
+  _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class ExamplePage extends StatefulWidget {
-  const ExamplePage({Key? key}) : super(key: key);
 
-  @override
-  State<ExamplePage> createState() => _ExamplePageState();
-}
 
-class _ExamplePageState extends State<ExamplePage> {
-  final CalendarSliderController _firstController = CalendarSliderController();
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _page = 0;
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
-  late DateTime _selectedDateAppBBar;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedDateAppBBar = DateTime.now();
-  }
+  final List<Widget> _pages = [
+    const Calendario(),
+    Quemsomos(),
+    const LoginScreen(),
+    CadastroPage() ,
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CalendarSlider(
-        controller: _firstController,
-        selectedDayPosition: SelectedDayPosition.center,
-        fullCalendarScroll: FullCalendarScroll.vertical,
-        backgroundColor: AppColors.primary,
-        fullCalendarWeekDay: WeekDay.short,
-        selectedTileBackgroundColor: Colors.white,
-        monthYearButtonBackgroundColor: Colors.white,
-        monthYearTextColor: Colors.black,
-        tileBackgroundColor: AppColors.primary,
-        selectedDateColor: Colors.black,
-        dateColor: Colors.white,
-        tileShadow: BoxShadow(
-          color: Colors.black.withOpacity(1),
-        ),
-        locale: 'pt-br',
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(const Duration(days: 100)),
-        lastDate: DateTime.now().add(const Duration(days: 100)),
-        onDateSelected: (date) {
+      bottomNavigationBar: CurvedNavigationBar(
+        key: _bottomNavigationKey,
+        index: _page,
+        items: const <Widget>[
+          Icon(Icons.add, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.account_box, size: 30),
+          Icon(Icons.call_split, size: 30),
+        ],
+        color: AppColors.primary,
+        buttonBackgroundColor: AppColors.primary,
+        backgroundColor: Colors.white,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 600),
+        onTap: (index) {
           setState(() {
-            _selectedDateAppBBar = date;
+            _page = index;
           });
         },
+        letIndexChange: (index) => true,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                _firstController.goToDay(DateTime.now());
-              },
-              child: const Text("Go to today"),
-            )
-          ],
-        ),
+      body: _pages[_page], // Atualiza o body com a tela correspondente
+    );
+  }
+}
+
+class PageWidget extends StatelessWidget {
+  final Color color;
+  final String text;
+
+  const PageWidget({super.key, required this.color, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      child: Center(
+        child: Text(text, style: const TextStyle(fontSize: 40, color: Colors.white)),
       ),
     );
   }
