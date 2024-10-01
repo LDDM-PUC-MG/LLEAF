@@ -28,7 +28,7 @@ class Quemsomos extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center, // Mudado para center
             children: <Widget>[
               const Center(
                 child: Text(
@@ -58,8 +58,7 @@ class Quemsomos extends StatelessWidget {
                   child: ClipOval(
                     child: Image.asset(
                       'assets/images/logo.png',
-                      fit: BoxFit
-                          .cover, 
+                      fit: BoxFit.cover,
                       width: 75,
                       height: 75,
                     ),
@@ -69,40 +68,52 @@ class Quemsomos extends StatelessWidget {
               const SizedBox(height: 20),
 
               const Text(
-                "Um aplicativo de organização pessoal e que permite armazenar, colecionar e relembrar memórias de momentos especiais.",
+                "O seu aplicativo de organização pessoal. \n\nCom o LEAF além de notas você consegue armazenar suas melhores memórias no dia em que foram vividas para recordar no futuro.",
                 style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center, // Centralizando o texto
               ),
               const SizedBox(height: 30),
 
               const Text(
                 "Quem Somos:",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center, // Centralizando o texto
               ),
               const SizedBox(height: 20),
 
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2, // Duas colunas
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: [
-                  // Card 1
-                  _buildCard('assets/images/Perfil.png', 'Nome 1',
-                      'https://www.linkedin.com/feed/', 'https://github.com'),
-                  // Card 2
-                  _buildCard('assets/images/Perfil.png', 'Nome 2',
-                      'https://www.linkedin.com/feed/', 'https://github.com'),
-                  // Card 3
-                  _buildCard('assets/images/Perfil.png', 'Nome 3',
-                      'https://www.linkedin.com/feed/', 'https://github.com'),
-                  // Card 4
-                  _buildCard('assets/images/Perfil.png', 'Nome 4',
-                      'https://www.linkedin.com/feed/', 'https://github.com'),
-                ],
+              // Centralizando o Wrap
+              Center(
+                child: Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    // Cards
+                    _buildCard(
+                        'assets/images/membros/Bruno.png', // bruno
+                        'Bruno Braga Guimarães Alves',
+                        'https://www.linkedin.com/in/bruno-braga-aab900266/',
+                        'https://github.com/Bruno0926'),
+                    _buildCard(
+                        'assets/images/membros/Nagib.png', // nagib
+                        'Nagib Alexandre Verly Borjaili',
+                        'https://www.linkedin.com/in/nagibalexandre/',
+                        'https://github.com/NagibAlexandre'),
+                    _buildCard(
+                        'assets/images/membros/VitorM.png', // vitorm
+                        'Vitor Dias de Britto Militão',
+                        'https://www.linkedin.com/in/vitor-militão-65b254252/',
+                        'https://github.com/militaovitor01'),
+                    _buildCard(
+                        'assets/images/membros/VitorL.png', // vitorl
+                        'Vitor Lucio de Oliveira',
+                        'https://www.linkedin.com/in/vitor-lucio-oliveira/',
+                        'https://github.com/VitorLucioOliveira'),
+                  ],
+                ),
               ),
             ],
           ),
@@ -113,51 +124,75 @@ class Quemsomos extends StatelessWidget {
 
   // Função para construir cada card
   Widget _buildCard(String imagePath, String name, String link1, String link2) {
-    return Column(
-      children: [
-        // Foto
-        Image.asset(
-          imagePath,
-          width: 100,
-          height: 100,
-        ),
-        const SizedBox(height: 10),
-
-        // Nome
-        Text(
-          name,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-
-        // Botões para links com imagens
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                _launchURL(link1);
-              },
+    return Container(
+      width: 150,
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: Colors.black, width: 1), // Borda 1px solid black
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1), // Sombra
+                  blurRadius: 5,
+                  spreadRadius: 1,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12), // border radius
               child: Image.asset(
-                'assets/images/Link1.png', // Imagem do botão 1
-                width: 30,
-                height: 30,
+                imagePath,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 10),
-            TextButton(
-              onPressed: () {
-                _launchURL(link2);
-              },
-              child: Image.asset(
-                'assets/images/Link2.png', // Imagem do botão 2
-                width: 30,
-                height: 30,
-              ),
+          ),
+          const SizedBox(height: 10),
+
+          // Nome centralizado
+          Center(
+            child: Text(
+              name,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(height: 10),
+
+          // Botões para links com imagens
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _launchURL(link1);
+                },
+                child: Image.asset(
+                  'assets/images/Link1.png', // Imagem do botão 1
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+              const SizedBox(width: 10),
+              TextButton(
+                onPressed: () {
+                  _launchURL(link2);
+                },
+                child: Image.asset(
+                  'assets/images/Link2.png', // Imagem do botão 2
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
