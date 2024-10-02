@@ -1,3 +1,5 @@
+import 'package:calendario/Telas/LoginCadastro/cadastro.dart';
+
 import '../../Estilo/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -151,6 +153,10 @@ class LoginScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Ação de criar conta
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CadastroPage()), // Tela de cadastro
+                      );
                     },
                     child: Text(
                       "Crie agora",

@@ -1,7 +1,7 @@
 import 'package:calendario/Telas/quemsomos.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
+import 'Estilo/fonts.dart';
 import 'Telas/LoginCadastro/login.dart';
 import 'Telas/calendario.dart';
 import 'Estilo/colors.dart';
@@ -16,8 +16,6 @@ class BottomNavBar extends StatefulWidget {
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
-
-
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _page = 0;
